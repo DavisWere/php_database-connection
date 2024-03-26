@@ -46,7 +46,7 @@
     </style>
 </head>
 <body>
-    <form action="connect.php" method="POST">
+    <form action="userDataLogic.php" method="POST">
         <label for="name">Name:</label>
         <input type="text" name="name" required>
         <br>
@@ -68,50 +68,4 @@
         <input type="submit" value="Submit">
     </form>
 </body>
-<?php
-if($_SERVER["REQUEST_METHOD"]=="POST"){
-    //  database parameters
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "passion";
-    
-    // create  a connection to the database
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // check connection
-
-    if ($conn->connect_error){
-        die("connection failed: " .$con->connect_error);
-
-    }
-
-    // get form data
-    $name = $_POST['name'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $amount = $_POST['amount'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
-
-    // prepare and bind the sql statement
-
-    $stmt = $conn->prepare("INSERT INTO form_data(name, email, password, amount, date, time) VALUES(?,?,?,?,?,?)");
-    $stmt->bind_param("sssiis",$name, $email, $password, $amount, $date,$time);
-
-    // execute the statement
-    if ($stmt->execute()){
-        echo " successfull";
-
-    } else {
-        echo "Error " . $stmt->error;
-    }
-    // close the statement and connection
-    $stmt->close();
-    $conn->close();
-
-}
-
-?>
 </html>
